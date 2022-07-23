@@ -125,3 +125,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# vscode
+.vscode/
+
+# project
+log/
+users/
+chat/

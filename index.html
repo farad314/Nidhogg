@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>尼德霍格(Nidhogg): 法拉的聊天室</title>
+  <link rel="icon" type="image/svg+xml" sizes="256x256" href="/asset/img/chat_edenbio.svg" />
+  <link rel="stylesheet" href="/asset/css/theme.css" />
+</head>
+
+<body>
+  <div id="chatlist">
+    <div id="icon">
+      <img src="/asset/img/chat_edenbio.svg" alt="尼德霍格标志" />
+      <div class="title">
+        <span class="titlet">尼德霍格(Nidhogg)</span><br />
+        <span class="subtitlet">法拉私有论坛</span>
+      </div>
+    </div>
+    <hr />
+    <div id="listclip">
+      <div class="chat">
+        <img src="/asset/img/cloth.svg" alt="群聊" />
+        <div class="title">
+          <span class="titlet">《伊甸生命》服装设计</span>
+        </div>
+      </div>
+    </div>
+    <div id="user">
+      <img alt="用户选项按钮" />
+      <div class="title">
+        <span class="titlet">未登录</span>
+      </div>
+    </div>
+  </div>
+  <div id="chatbox">
+    <div id="chatmain">
+      <div class="msgouter">
+        <div class="msg me">
+          <img class="avatar" src="/asset/img/farad.png" alt="用户头像" srcset="" />
+
+          <div class="chat">
+            <div class="msg">Hello?</div>
+            <div class="msg">anybody here?</div>
+          </div>
+        </div>
+        <div class="info">
+          <div class="name">测试机器人</div>
+          <div class="time">3:14PM 2022.7.23</div>
+        </div>
+      </div>
+      <div class="msgouter">
+        <div class="msg">
+          <img class="avatar" src="/asset/img/farad.png" alt="用户头像" srcset="" />
+          <div class="chat">
+            <div class="msg">You've got one</div>
+            <div class="msg">What's up?</div>
+          </div>
+        </div>
+        <div class="info">
+          <div class="name">法拉</div>
+          <div class="time">3:15PM 2022.7.13</div>
+        </div>
+      </div>
+    </div>
+    <input id="msginput" type="text" lang="zh-cn" aria-label="消息输入框" autocomplete="off" autofocus placeholder="未登录"
+      spellcheck="true" disabled="true"></input>
+    <img id="bgicon" src="/asset/img/chat_edenbio_nocolor.svg" alt="单色尼德霍格标志" />
+    <div id="loginbox">
+      <form action="">
+        <label for="uuidbox">用户UUID(登录系统未完成，请使用UUID登录)</label>
+        <input type="text" name="uuid" id="uuidbox" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+        <input type="button" value="登录">
+        <label id="errorinfo"></label>
+      </form>
+    </div>
+    <script>
+      // Worker script
+      Notification.requestPermission();
+      msg = new Worker("./msg.js");
+      msg.onmessage = function (e) {
+        switch (e.data.action) {
+          case "focus":
+            window.focus();
+            break;
+          case "alert":
+            alert(e.data.body.data);
+            break;
+          case "ls":
+            localStorage[e.data.body.key] = e.data.body.value;
+            postls();
+          case "NotiRequest":
+            if (!("Notification" in window))
+              console.warn("[WARN][NOTIFY]: Notification is not exist");
+            else if (Notification.permission !== "granted")
+              Notification.requestPermission();
+        }
+      };
+      function postls() {
+        msg.postMessage({
+          action: "ls",
+          body: {
+            NotifyRequested: localStorage.NotifyRequested,
+            usr: localStorage.usr,
+          },
+        });
+      }
+      postls();
+    </script>
+    <script>
+      document.querySelectorAll("#listclip > div.chat").forEach((e) => {
+        e.addEventListener("click", (e) => {
+          document.querySelectorAll(".seleted").forEach((e) => {
+            e.classList.remove("seleted");
+          });
+          e.currentTarget.classList.add("seleted");
+        });
+      });
+      document.querySelector("#loginbox > form > input[type=button]:nth-child(3)").addEventListener('click', (e) => {
+        if (uuidbox.value.search(/([a-z]|[0-9]){8}-(([a-z]|[0-9]){4}-){3}([a-z]|[0-9]){12}/i) == -1) {
+          loginbox.classList.remove("error");
+          setTimeout(() => {
+            loginbox.classList.add("error");
+          }, 1)
+          errorinfo.innerText = "格式有误";
+          setTimeout(() => {
+            errorinfo.innerText = "";
+          }, 2000)
+        }
+      })
+      errorinfo = document.getElementById("errorinfo");
+      uuidbox = document.getElementById("uuidbox");
+      list = document.getElementById("listclip");
+      user = document.getElementById("user");
+      loginbox = document.getElementById("loginbox");
+
+      user.addEventListener("click", (e) => {
+        if (!user.classList.contains("logged")) {
+          user.classList.toggle("active");
+          loginbox.classList.toggle("active");
+        } else {
+          user.classList.remove("active");
+          loginbox.classList.remove("active");
+        }
+      });
+      msgbox = document.getElementById("msginput");
+      msgbox.addEventListener('keydown', (e) => {
+        if (!(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.repeat || e.key != "Enter")) {
+
+        }
+      })
+      litop = 0;
+      list.addEventListener(
+        "wheel",
+        (e) => {
+          if (list.clientHeight < window.innerHeight - user.clientHeight)
+            return;
+          if (litop - e.deltaY < 0)
+            if (
+              litop - e.deltaY + list.clientHeight >
+              window.innerHeight - user.clientHeight
+            ) {
+              list.style.top = litop - e.deltaY + "px";
+              litop -= e.deltaY;
+            } else {
+              list.style.top =
+                window.innerHeight -
+                user.clientHeight -
+                list.clientHeight +
+                "px";
+              litop =
+                window.innerHeight - user.clientHeight - list.clientHeight;
+            }
+          else {
+            list.style.top = "0px";
+            litop = 0;
+          }
+        },
+        { passive: true }
+      );
+      function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+      }
+      //调用
+      uuid = getQueryString("uuid")
+      if (uuid) {
+        msg.postMessage({ action: "login", body: { id: uuid } });
+      }
+      function addmsg(id, name, avatar = "/asset/img/farad.png",time=-1,msg) {
+        var obj = document.createElement('div');
+        if (chatmain.lastElementChild.usr.id == id) {
+          obj.classList.add('msg');
+          if(time == -1) {
+            time = new Date();
+            time = time.getTime();
+          }
+          obj.innerText = msg;
+          chatmain.lastElementChild.querySelector(".chat").appendChild
+        }
+        else {
+          mshtml = '<div class="msg">' +
+            '<img class="avatar" src="' + avatar + '" alt="用户头像" />' +
+            '<div class="chat">' +
+            '<div class="msg">You\'ve got one</div>' +
+            '<div class="msg">What\'s up?</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="info">' +
+            '<div class="name">法拉</div>' +
+            '<div class="time">3:15PM 2022.7.13</div>' +
+            '</div>'
+          obj.classList.add('msgouter');
+          obj.innerHtml = mshtml;
+        }
+      }
+    </script>
+
+</body>
+
+</html>

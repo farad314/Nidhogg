@@ -1,0 +1,9 @@
+{
+    "fsPos": {
+        "usersFolder": "./users/",
+        "chatFolder": "./chat/",
+        "chatlist": "./chat/info.json",
+        "userlist": "./users/info.json"
+    },
+    "lastArchive":0
+}
