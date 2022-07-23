@@ -216,7 +216,7 @@ div#print {
 .msg.me,.me+.info{
   flex-direction: row-reverse;
 }
-.me .msg{
+.me .msgtxt{
   text-align: right;
 }
 input:hover{
