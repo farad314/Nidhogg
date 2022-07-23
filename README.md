@@ -15,4 +15,5 @@ Author: `Flat UI Colors`
 > [CMS Higgs-event.jpg](https://commons.wikimedia.org/wiki/File:CMS_Higgs-event.jpg)
 
 Author: `Lucas Taylor / CERN`
+
 Our Edited Version, as license's required to show it: [Here](/asset/img/CMS_Higgs-event.svg)
