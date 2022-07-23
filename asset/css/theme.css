@@ -1,6 +1,6 @@
 @font-face {
   font-family: "SourceHanSans";
-  src: url("/asset/font/SourceHanSans/SourceHanSansSC-VF.otf.woff2")
+  src: url("/Nidhogg/asset/font/SourceHanSans/SourceHanSansSC-VF.otf.woff2")
     format("woff2");
 }
 :root {
@@ -260,7 +260,7 @@ input[type="text"]:disabled{
   box-shadow: none;
 }
 #user.active img{
-  src:url("/asset/img/user_light.svg");
+  src:url("/Nidhogg/asset/img/user_light.svg");
 }
 #loginbox{
   position: fixed;
@@ -270,6 +270,7 @@ input[type="text"]:disabled{
   margin: 0.5em;
   margin-left: 1.25em;
   background-color: #0008;
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   transform: translate(-150%, 0);
   transition: transform var(--gentle-motion);
@@ -318,8 +319,8 @@ input[type="text"]:disabled{
   margin-left: 0;
 }
 #user > img{
-  content: url("/asset/img/user.svg");
+  content: url("/Nidhogg/asset/img/user.svg");
 }
 #user.logged > img{
-  content: url("/asset/img/user_color.svg");
+  content: url("/Nidhogg/asset/img/user_color.svg");
 }
