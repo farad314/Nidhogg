@@ -5,14 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>尼德霍格(Nidhogg): 法拉的聊天室</title>
-  <link rel="icon" type="image/svg+xml" sizes="256x256" href="/Nidhogg/asset/img/chat_edenbio.svg" />
-  <link rel="stylesheet" href="/Nidhogg/asset/css/theme.css" />
+  <link rel="icon" type="image/svg+xml" sizes="256x256" href="./asset/img/chat_edenbio.svg" />
+  <link rel="stylesheet" href="./asset/css/theme.css" />
 </head>
 
 <body>
   <div id="chatlist">
     <div id="icon">
-      <img src="/Nidhogg/asset/img/chat_edenbio.svg" alt="尼德霍格标志" />
+      <img src="./asset/img/chat_edenbio.svg" alt="尼德霍格标志" />
       <div class="title">
         <span class="titlet">尼德霍格(Nidhogg)</span><br />
         <span class="subtitlet">法拉私有论坛</span>
@@ -21,7 +21,7 @@
     <hr />
     <div id="listclip">
       <div class="chat">
-        <img src="/Nidhogg/asset/img/cloth.svg" alt="群聊" />
+        <img src="./asset/img/cloth.svg" alt="群聊" />
         <div class="title">
           <span class="titlet">《伊甸生命》服装设计</span>
         </div>
@@ -38,7 +38,7 @@
     <div id="chatmain">
       <div class="msgouter">
         <div class="msg me">
-          <img class="avatar" src="/Nidhogg/asset/img/farad.png" alt="用户头像" srcset="" />
+          <img class="avatar" src="./asset/img/farad.png" alt="用户头像" srcset="" />
 
           <div class="chat">
             <div class="msg">Hello?</div>
@@ -52,7 +52,7 @@
       </div>
       <div class="msgouter">
         <div class="msg">
-          <img class="avatar" src="/Nidhogg/asset/img/farad.png" alt="用户头像" srcset="" />
+          <img class="avatar" src="./asset/img/farad.png" alt="用户头像" srcset="" />
           <div class="chat">
             <div class="msg">You've got one</div>
             <div class="msg">What's up?</div>
@@ -66,7 +66,7 @@
     </div>
     <input id="msginput" type="text" lang="zh-cn" aria-label="消息输入框" autocomplete="off" autofocus placeholder="未登录"
       spellcheck="true" disabled="true"></input>
-    <img id="bgicon" src="/Nidhogg/asset/img/chat_edenbio_nocolor.svg" alt="单色尼德霍格标志" />
+    <img id="bgicon" src="./asset/img/chat_edenbio_nocolor.svg" alt="单色尼德霍格标志" />
     <div id="loginbox">
       <form action="">
         <label for="uuidbox">用户UUID(登录系统未完成，请使用UUID登录)</label>
@@ -189,7 +189,7 @@
       if (uuid) {
         msg.postMessage({ action: "login", body: { id: uuid } });
       }
-        function addmsg(id, name, avatar = "/Nidhogg/asset/img/farad.png", time = -1, msg) {
+          function addmsg(id, name, avatar = "./asset/img/farad.png", time = -1, msg) {
         var obj = document.createElement('div');
         if (chatmain.lastElementChild.usr.id == id) {
           obj.classList.add('msg');
